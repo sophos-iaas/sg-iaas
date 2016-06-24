@@ -3,7 +3,7 @@
 ## Installation
 
     git clone https://github.com/sophos-iaas/sg-iaas.git ~/.sg-iaas
-    echo "export PATH=$PATH:~/.sg-iaas/bin"
+    echo "export PATH=\$PATH:~/.sg-iaas/bin" >> ~/.bashrc
 
 ### Requirements
 

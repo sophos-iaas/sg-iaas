@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 export APPNAME=`basename $0`
 export APPDIR=$(dirname "$0")
