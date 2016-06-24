@@ -1,0 +1,27 @@
+#!/bin/sh
+
+export APPNAME=`basename $0`
+export APPDIR=$(dirname "$0")
+
+function with_tempdir() {
+  export TMP=`mktemp -d /tmp/${APPNAME}.XXXXXX` || exit 1
+}
+
+function subcmd() {
+  sh $APPDIR/../lib/subcmd/$1.sh
+}
+
+option="${1}"
+case $1 in
+  update|verify|help)
+    subcmd $1
+  ;;
+  ogw-routes)
+    with_tempdir
+    VPC_ID=$2 subcmd ogw-routes
+  ;;
+  *)
+    echo "usage: $APPNAME [help]"
+    exit 1
+  ;;
+esac
