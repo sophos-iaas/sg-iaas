@@ -9,7 +9,7 @@
 
 #### Linux (ubuntu, debian)
 
-    **** install ????
+    apt install awscli jq git
 
 #### Linux (fedora, redhat)
 
