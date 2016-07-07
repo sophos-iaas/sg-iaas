@@ -1,0 +1,32 @@
+SUBCMD_PATH=$APPDIR/../lib/subcmd
+
+function with_tempdir() {
+  export TMP=`mktemp -d /tmp/${APPNAME}.XXXXXX` || exit 1
+  trap "rm -rf $TMP" EXIT
+}
+
+function valid_subcmd() {
+  [[ -f $SUBCMD_PATH/$1.sh ]]
+}
+
+function subcmd() {
+  CMD=$1
+  shift
+  $SHELL $SUBCMD_PATH/$CMD.sh $@
+}
+
+function with_utm_region() {
+  export AWS_DEFAULT_REGION=`ruby2.0 -ryaml -e 'YAML.load(File.read("/etc/cloud/user_data.yml"))["region"].display'`
+}
+
+function utm() {
+  [[ -f /var/confd/confd.plx ]]
+}
+
+
+function with_temp_and_region() {
+  with_tempdir
+  if utm; then
+    with_utm_region
+  fi
+}

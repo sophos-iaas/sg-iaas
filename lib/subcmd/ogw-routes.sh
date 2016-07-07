@@ -1,10 +1,16 @@
+source $APPDIR/../lib/helper.subr
+
+with_temp_and_region
+
 SUBNETS=$TMP/subnets.json
 ROUTES=$TMP/routing.json
 TABLE=$TMP/routing-table.json
 NETINTERFACES=$TMP/network-interfaces.json
 REPLACES=$TMP/replace.sed
 
-printf "Fetch AWS information "
+for VPC_ID in $@; do
+
+printf "# Fetch AWS information for $VPC_ID "
 # fetch all VPC subnets
 aws ec2 describe-subnets --filters '{"Name":"vpc-id","Values":["'$VPC_ID'"]}' > $SUBNETS || exit 2
 printf "."
@@ -16,11 +22,12 @@ printf "."
 
 # find all network interfaces for the routeing tables
 aws ec2 describe-network-interfaces --network-interface-ids `cat $TABLE | jq -r '.[].RoutesTo'` > $NETINTERFACES || exit 4
-printf "."
+printf ".\n"
 
 # have sed commands to replace the subnet by it's cidr
 cat $SUBNETS | jq -r -c '.Subnets[] | "s|" + .SubnetId + "|" +.CidrBlock + "|g;"' > $REPLACES
 cat $NETINTERFACES | jq -r -c '.NetworkInterfaces[] | "s|" + .NetworkInterfaceId + "|" +.PrivateIpAddress + "|g;"' >> $REPLACES
 
-printf "\n"
 sed -f $REPLACES $TABLE | jq -r '.[] | .Subnets[] + " -> " + .RoutesTo ' | sort
+
+done
