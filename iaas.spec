@@ -27,7 +27,6 @@ install -D -m 755 bin/sg-iaas %{buildroot}/usr/bin/sg-iaas
 cp -r lib/* %{buildroot}/usr/lib/sg-iaas
 
 %check
-sg-iaas help
 
 %files
 %defattr(-,root,root)
