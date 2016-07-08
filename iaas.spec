@@ -1,5 +1,4 @@
 Name:             iaas
-Epoch:            1
 Version:          1.0.0
 Release:          %{_gitrelease}
 Provides:         %{_gitprovides}
@@ -30,11 +29,7 @@ cp -r lib/* %{buildroot}/usr/lib/sg-iaas
 
 %files
 %defattr(-,root,root)
-%dir /usr/bin
 /usr/bin/sg-iaas
-%dir /usr/lib/sg-iaas
-%dir /usr/lib/sg-iaas/subcmd
-/usr/lib/sg-iaas/*
-/usr/lib/sg-iaas/subcmd/*
+/usr/lib/sg-iaas/
 
 %changelog
