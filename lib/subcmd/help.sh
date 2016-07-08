@@ -1,13 +1,12 @@
-source $APPDIR/../lib/helper.subr
+source $LIB_DIR/helper.subr
 
 echo "Commands:"
+if utm; then
 echo "  $APPNAME update"
 echo "     Update the sg-iaas package"
+else
 echo "  $APPNAME verify"
 echo "     Verify the installation"
-if utm; then
-echo "  $APPNAME setup"
-echo "     Install the awscli until using pip"
 fi
 echo "  $APPNAME ogw-routes <vpc-id>"
 echo "     Check the instance routes set in the vpc"

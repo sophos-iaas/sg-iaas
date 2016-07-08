@@ -1,11 +1,11 @@
-source $APPDIR/../lib/helper.subr
+source $LIB_DIR/helper.subr
 
 with_temp_and_region
 
-echo "# Checks OGW client subnet compatability"
+echo "# Checks OGW client subnet compatibility"
 echo "# OK    = no restictions in usage"
 echo "# WARN  = warning, multiple subnets use the same route"
-echo "# ERROR = error, either no default route or no main routing table"
+echo "# ERROR = error, no default route or assigned to main routing table"
 
 SUBNETS=$TMP/subnets.json
 ROUTES=$TMP/routing.json
@@ -15,19 +15,15 @@ function subnet_cidr() {
 }
 
 function print_list() {
-  PRINT=$TMP/print.txt
   for SUBNET in $2; do
     CIDR=$(subnet_cidr $SUBNET)
-    echo -e "$1\t$SUBNET\t$CIDR" >> $PRINT
+    echo -e "$1\t$SUBNET\t$CIDR"
   done
-  if [[ -f $PRINT ]]; then
-    sort -k 3 $PRINT
-  fi
 }
 
 for VPC_ID in $@; do
 
-printf "# Compatability of client subnets in $VPC_ID "
+printf "# Compatibility of client subnets in $VPC_ID "
 
 aws ec2 describe-subnets --filters '{"Name":"vpc-id","Values":["'$VPC_ID'"]}' >  $SUBNETS || exit 2
 printf "."
@@ -45,7 +41,6 @@ for SUBNET in `cat $SUBNETS | jq -r -c '.Subnets[] | .SubnetId'`; do
     ERR_SUBNET_LIST+="$SUBNET "
   fi
 done
-
 
 print_list "OK" "$OK_SUBNET_LIST"
 print_list "WARN" "$WARN_SUBNET_LIST"

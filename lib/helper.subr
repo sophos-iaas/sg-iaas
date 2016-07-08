@@ -1,4 +1,4 @@
-SUBCMD_PATH=$APPDIR/../lib/subcmd
+SUBCMD_PATH=$LIB_DIR/subcmd
 
 function with_tempdir() {
   export TMP=`mktemp -d /tmp/${APPNAME}.XXXXXX` || exit 1
@@ -23,10 +23,17 @@ function utm() {
   [[ -f /var/confd/confd.plx ]]
 }
 
+# install awscli if not already
+function with_utm_awscli() {
+  if [[ ! -f /usr/bin/aws ]]; then
+    /usr/bin/pip-2.7 install awscli
+  fi
+}
 
 function with_temp_and_region() {
   with_tempdir
   if utm; then
     with_utm_region
+    with_utm_awscli
   fi
 }

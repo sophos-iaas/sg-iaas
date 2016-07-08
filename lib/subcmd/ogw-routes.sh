@@ -1,4 +1,4 @@
-source $APPDIR/../lib/helper.subr
+source $LIB_DIR/helper.subr
 
 with_temp_and_region
 

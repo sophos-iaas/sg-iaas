@@ -2,8 +2,14 @@
 
 export APPNAME=`basename $0`
 export APPDIR=$(dirname "$0")
+export LIB_DIR=/usr/lib/sg-iaas
 
-source $APPDIR/../lib/helper.subr
+# if not installed, find the lib dir relative to the application
+if [[ ! -d $LIB_DIR ]]; then
+  export LIB_DIR=$APPDIR/../lib
+fi
+
+source $LIB_DIR/helper.subr
 
 # extract the subcommand
 CMD=$1
