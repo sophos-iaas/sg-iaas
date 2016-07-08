@@ -9,7 +9,7 @@ URL:              https://github.com/sophos-iaas/sg-iaas
 Source:           %{name}.git.tar.gz
 Source99:	      	gitinfo
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
-Requires:    			bash jq python python-pip curl ruby groff
+Requires:    			bash jq python python-pip curl ruby
 
 %description
 SG IaaS support and customer tooling.
