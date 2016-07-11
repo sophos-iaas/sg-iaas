@@ -1,10 +1,9 @@
 source $LIB_DIR/helper.subr
 
 echo "Commands:"
-if utm; then
+if ! utm; then
 echo "  $APPNAME update"
 echo "     Update the sg-iaas package"
-else
 echo "  $APPNAME verify"
 echo "     Verify the installation"
 fi
