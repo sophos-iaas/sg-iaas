@@ -16,7 +16,9 @@ function subcmd() {
 }
 
 function with_utm_region() {
-  export AWS_DEFAULT_REGION=`ruby2.0 -ryaml -e 'YAML.load(File.read("/etc/cloud/user_data.yml"))["region"].display'`
+  if utm; then
+    export AWS_DEFAULT_REGION=`ruby2.0 -ryaml -e 'YAML.load(File.read("/etc/cloud/user_data.yml"))["region"].display'`
+  fi
 }
 
 function utm() {
@@ -25,15 +27,13 @@ function utm() {
 
 # install awscli if not already
 function with_utm_awscli() {
-  if [[ ! -f /usr/bin/aws ]]; then
+  if [[ ! -f /usr/bin/aws ]] && utm; then
     /usr/bin/pip-2.7 install awscli
   fi
 }
 
 function with_temp_and_region() {
   with_tempdir
-  if utm; then
-    with_utm_region
-    with_utm_awscli
-  fi
+  with_utm_region
+  with_utm_awscli
 }
