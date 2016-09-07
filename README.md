@@ -13,7 +13,7 @@
 
 #### Linux (fedora, redhat)
 
-    **** install ????
+    yum install awscli jq git
 
 #### macOS
 
