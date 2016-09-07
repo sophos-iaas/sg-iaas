@@ -1,3 +1,8 @@
+# Copyright 2016 Sophos Technology GmbH. All rights reserved.
+# This software may be modified and distributed under the terms
+# of the MIT license. See the LICENSE file for details.
+# Authors: Vincent Landgraf
+
 SUBCMD_PATH=$LIB_DIR/subcmd
 
 function with_tempdir() {
@@ -16,9 +21,7 @@ function subcmd() {
 }
 
 function with_utm_region() {
-  if utm; then
-    export AWS_DEFAULT_REGION=`ruby2.0 -ryaml -e 'YAML.load(File.read("/etc/cloud/user_data.yml"))["region"].display'`
-  fi
+  export AWS_DEFAULT_REGION=`ruby2.0 -ryaml -e 'YAML.load(File.read("/etc/cloud/user_data.yml"))["region"].display'`
 }
 
 function utm() {
@@ -27,13 +30,15 @@ function utm() {
 
 # install awscli if not already
 function with_utm_awscli() {
-  if [[ ! -f /usr/bin/aws ]] && utm; then
+  if [[ ! -f /usr/bin/aws ]]; then
     /usr/bin/pip-2.7 install awscli
   fi
 }
 
 function with_temp_and_region() {
   with_tempdir
-  with_utm_region
-  with_utm_awscli
+  if utm; then
+    with_utm_region
+    with_utm_awscli
+  fi
 }

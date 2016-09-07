@@ -1,3 +1,8 @@
+# Copyright 2016 Sophos Technology GmbH. All rights reserved.
+# This software may be modified and distributed under the terms
+# of the MIT license. See the LICENSE file for details.
+# Authors: Vincent Landgraf, Georg Fleig
+
 source $LIB_DIR/helper.subr
 
 echo "Commands:"
@@ -11,7 +16,7 @@ echo "  $APPNAME ogw-routes <vpc-id>"
 echo "     Check the instance routes set in the vpc"
 echo "  $APPNAME ogw-compat <vpc-id>"
 echo "     Check the compatibility of the subnets in the vpc"
-echo "  $APPNAME ogw-cw-role"
+echo "  $APPNAME ogw-create-cw-role"
 echo "     Creates IAM role to allow CloudWatch to restart OGW instances"
 echo "  $APPNAME help"
 echo "     Show this help"

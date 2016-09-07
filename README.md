@@ -34,3 +34,20 @@
 ## Help
 
     sg-iaas help
+
+### OGW (Outbound Gateway)
+
+#### Verify routing
+
+    sg-iaas ogw-routes <vpc-id>
+
+#### Check subnet compatibility
+
+    sg-iaas ogw-compat <vpc-id>
+
+#### Create IAM role for CloudWatch
+
+Allow CloudWatch to restart OGW instances in case of failure. This role might be
+missing on older installations and can be created with the following command
+
+    sg-iaas ogw-create-cw-role
